@@ -1,0 +1,11 @@
+{
+  "frontend/src/index.css": "Global styles defining the deep-space dark theme with OKLCH color tokens, Inter font import, custom scrollbar styling, and CSS variables for panel backgrounds, borders, and shadows.",
+  "frontend/tailwind.config.js": "Tailwind configuration extending the theme with Inter font family, custom border radii, box shadows, and a toast-in keyframe animation alongside the standard OKLCH color token mappings.",
+  "frontend/src/utils/boardState.ts": "Utility module defining column/section structures, card types (StaffCard, CourseCard, AppBoardState), seed data (miguelCard, snhuCanonicalCards), migration functions, normalization helpers, and backend serialization/deserialization logic.",
+  "frontend/src/hooks/useQueries.ts": "React Query hooks for loading board state from the backend (with fallback to default state on first load) and mutating/persisting board state via the backend canister.",
+  "frontend/src/components/Toast.tsx": "Fixed-position bottom-center toast notification component that renders only when a message string is provided, with frosted-glass styling and a slide-in animation.",
+  "frontend/src/components/UnlockModal.tsx": "Confirmation modal overlay for unlocking the board, with frosted-glass styling, a cancel button, and a green-tinted confirm button.",
+  "frontend/src/components/StaffingBoard.tsx": "Amazon Workplace staffing board with 5 columns and their subsections, HTML5 drag-and-drop card movement, visual drop-target highlighting, card counts, and lock-aware drag prevention.",
+  "frontend/src/components/SNHUBoard.tsx": "SNHU university course tracker board with 3 columns (Current Term, Upcoming Term, Not Assigned), drag-and-drop course card movement, subsection counts, and lock-aware drag prevention.",
+  "frontend/src/App.tsx": "Main application shell with three-section topbar (board selector + last-updated, title + live clock, lock/unlock button), board switching between Amazon and SNHU views, optimistic local state with backend sync, toast notifications, and footer with attribution."
+}

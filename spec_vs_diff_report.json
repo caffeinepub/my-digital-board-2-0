@@ -1,0 +1,63 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-25T06:37:38.823Z",
+  "summary": "The diff implements most of the required features across frontend and backend files. The Motoko backend, frontend boards, seeding logic, lock/unlock, toast, and visual theme are all present. However, the backend lacks stable variable storage (data will not survive canister upgrades), which is a critical part of REQ-1. The backend Card type is also a generic struct rather than domain-specific staffing/course card fields. A minor gap exists in REQ-2 topbar responsiveness. Overall coverage is high but the stable-storage omission is a clear missing requirement.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Data survives canister upgrades via stable variables.",
+      "reason": "The backend uses 'let boardStates = Map.empty<Text, BoardState>()' as a regular non-stable variable. There is no 'stable var' declaration or pre/post-upgrade hooks, so data will be lost on canister upgrades.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Topbar collapses to single-column layout on screens at or below 560px.",
+      "reason": "The App.tsx file is truncated in the diff and no explicit 560px single-column CSS rule for the three-section topbar is visible. Board grids have responsive rules but the topbar collapse behavior is not confirmed.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "getAllBoardStates() public query endpoint exposing all users' board states.",
+      "reason": "The build request only requires per-user getBoardState and updateBoardState endpoints. A getAllBoardStates endpoint was not requested and exposes all user data unnecessarily.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Full Internet Identity AuthClient login/logout flow.",
+      "reason": "The build request explicitly lists multi-user authentication as a non-goal and only requires a single hardcoded login. The useInternetIdentity hook implements a complete Internet Identity login flow that was not requested.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts",
+        "frontend/src/main.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.78,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/SNHUBoard.tsx",
+    "frontend/src/components/StaffingBoard.tsx",
+    "frontend/src/components/Toast.tsx",
+    "frontend/src/components/UnlockModal.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/utils/boardState.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

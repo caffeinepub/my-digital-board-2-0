@@ -1,0 +1,20 @@
+{
+  "backend/main.mo": "Motoko actor that stores and retrieves per-user board states (staffing and course cards) using a Map, exposing query and update methods for get, set, and list all states.",
+  "feature_evidence.json": "Feature evidence report mapping implemented feature IDs (topbar shell, staffing board, seeding, SNHU board, etc.) to their source files, components, test IDs, and confidence levels.",
+  "frontend-file-summaries.txt": "JSON document providing one-sentence descriptions of each frontend source file, serving as a quick reference index for the project's frontend modules.",
+  "frontend/index.css": "Tailwind base CSS file defining OKLCH-based CSS custom properties for light and dark themes, covering background, foreground, card, border, chart, and sidebar color tokens.",
+  "frontend/index.html": "Minimal HTML entry point titled 'My Digital Board 2.0' that mounts the React app into a root div and loads the main TSX module.",
+  "frontend/src/App.tsx": "Main application shell rendering a three-section topbar (board selector + last-updated, live clock + date, lock/unlock button), switching between StaffingBoard and SNHUBoard views, and managing optimistic local state with backend sync and toast notifications.",
+  "frontend/src/components/SNHUBoard.tsx": "SNHU course tracker board component rendering three columns (Current Term, Upcoming Term, Not Assigned) with subsections, HTML5 drag-and-drop card movement, and lock-aware drag prevention.",
+  "frontend/src/components/StaffingBoard.tsx": "Amazon Workplace staffing board component rendering five columns with their subsections, HTML5 drag-and-drop between sections, card counts, and lock-aware drag prevention.",
+  "frontend/src/components/Toast.tsx": "Fixed-position bottom-center toast notification component that renders a frosted-glass message bubble only when a non-empty message string is provided.",
+  "frontend/src/components/UnlockModal.tsx": "A modal dialog component that prompts the user to confirm unlocking the board for editing, with Cancel and Unlock buttons.",
+  "frontend/src/hooks/useActor.ts": "A React hook that creates and caches an ICP backend actor (authenticated or anonymous) using React Query, invalidating dependent queries when the identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Provides an InternetIdentityProvider context and useInternetIdentity hook for managing ICP Internet Identity authentication, including login, logout, and identity persistence via AuthClient.",
+  "frontend/src/hooks/useQueries.ts": "Defines React Query hooks for fetching (useBoardState) and updating (useUpdateBoardState) the board state from the ICP backend actor.",
+  "frontend/src/index.css": "Global CSS file that sets up Tailwind directives, imports the Inter font, defines a dark deep-space theme with CSS custom properties, and styles the scrollbar.",
+  "frontend/src/main.tsx": "Application entry point that mounts the React app with QueryClientProvider and InternetIdentityProvider wrapping the root App component.",
+  "frontend/src/utils/boardState.ts": "Defines column/section layouts, card types (StaffCard, CourseCard), and utility functions for default state, canonical card data, and migration of legacy column keys for the board state.",
+  "frontend/tailwind.config.js": "Tailwind CSS configuration that extends the theme with Inter font, oklch-based color tokens, custom border radii, box shadows, and animation keyframes, with typography, container-queries, and animate plugins.",
+  "project_state.json": "Tracks the project state (version 3) for 'My Digital Board 2.0', a single-HTML-file React app with an Amazon staffing board and SNHU course tracker, documenting architecture, existing features, known issues, and implementation notes."
+}

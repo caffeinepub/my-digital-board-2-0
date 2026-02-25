@@ -1,0 +1,231 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-25T06:37:38.826Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 8,
+    "implemented": 7,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Implement a Motoko backend actor that persists board state (staffing cards and university course cards) in stable storage, with query and update endpoints to read and write the full board state keyed by user login.",
+        "status": "unknown",
+        "plannedFiles": [],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Build the main App shell with a three-section topbar: left panel (board selector dropdown + last-updated timestamp), center panel (title 'My Digital Board 2.0' + today's full date + live clock updating every second), and right panel (Lock / Unlock button). The topbar must be responsive and collapse to single-column on narrow screens.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Implement the Amazon Workplace Staffing Board with 5 columns (Process Guide, In Path Function, Problem Solve, LaborShare, Not Assigned), each containing subsections as defined: Process Guide → [Stow, Pick]; In Path Function → [Downstacker, Stower, Picker, Transporter (Stow or Pick)]; Problem Solve → [QXY2, XLX7, IOL/ICQA]; LaborShare → [Inbound, Outbound]; Not Assigned → [Default]. Drag-and-drop must allow cards to be moved between any subsection. Each card displays: person name, login, shift co-host code, and shift pattern.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/StaffingBoard.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/StaffingBoard.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Seed the staffing board with a default card for Miguel A Davalos (login: migudavc, shift co-host: DB3T0700, shift pattern: Back Half Days) placed in the Not Assigned / Default subsection. On state load, always ensure this card exists; if missing, prepend it. Migrate legacy column key names to the current subsection keys.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/utils/boardState.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/utils/boardState.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Implement the SNHU University Course Tracker board with 3 columns (Current Term, Upcoming Term, Not Assigned). Current Term and Upcoming Term each have two subsections: Pending and In Progress. Not Assigned is a flat drop zone. Seed 4 canonical course cards: ENG 190 (C-2 Term – March thru April 2026), IDS 105 (C-2 Term), ECO 202 (C-3 Term – May thru June 2026), PHL 260 (C-3 Term). Each card displays the course title and term. Cards are draggable between all drop zones.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/SNHUBoard.tsx",
+          "frontend/src/utils/boardState.ts",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/SNHUBoard.tsx",
+          "frontend/src/utils/boardState.ts",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Implement board lock/unlock functionality. When locked, all drag-and-drop is disabled, and attempting to move a card shows a toast notification 'Locked. Unlock to edit.' The Lock button becomes an Unlock button. Clicking Unlock opens a confirmation modal; confirming unlocks the board. Lock state must persist across page reloads.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/UnlockModal.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/components/StaffingBoard.tsx",
+          "frontend/src/components/SNHUBoard.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/UnlockModal.tsx",
+          "frontend/src/App.tsx",
+          "frontend/src/components/StaffingBoard.tsx",
+          "frontend/src/components/SNHUBoard.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Implement a transient toast notification component that displays short messages at the bottom-center of the screen for 1800ms then auto-dismisses.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Toast.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Toast.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Apply a dark deep-space visual theme consistently across the app: deep navy/near-black radial gradient background (#0b1020 base with #15204a highlight at top-left), frosted-glass panels with backdrop blur, subtle white-border cards, and muted white typography. Use this exact palette and style for all UI elements.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/src/components/StaffingBoard.tsx",
+          "frontend/src/components/SNHUBoard.tsx",
+          "frontend/src/components/UnlockModal.tsx",
+          "frontend/src/components/Toast.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/src/components/StaffingBoard.tsx",
+          "frontend/src/components/SNHUBoard.tsx",
+          "frontend/src/components/UnlockModal.tsx",
+          "frontend/src/components/Toast.tsx",
+          "frontend/src/App.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/components/SNHUBoard.tsx",
+    "frontend/src/components/StaffingBoard.tsx",
+    "frontend/src/components/Toast.tsx",
+    "frontend/src/components/UnlockModal.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/src/utils/boardState.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

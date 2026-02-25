@@ -1,0 +1,216 @@
+{
+  "kind": "build_request",
+  "title": "My Digital Board 2.0 — Dual-Board Personal Dashboard",
+  "projectName": "My Digital Board",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Implement a Motoko backend actor that persists board state (staffing cards and university course cards) in stable storage, with query and update endpoints to read and write the full board state keyed by user login.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "localStorage.setItem(storageKey, JSON.stringify(nextState))"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes a query to retrieve the current board state (staffing cards + university cards).",
+        "Backend exposes an update call to save the full board state.",
+        "Data survives canister upgrades via stable variables."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Build the main App shell with a three-section topbar: left panel (board selector dropdown + last-updated timestamp), center panel (title 'My Digital Board 2.0' + today's full date + live clock updating every second), and right panel (Lock / Unlock button). The topbar must be responsive and collapse to single-column on narrow screens.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "display: grid; grid-template-columns: 1fr auto 1fr",
+          "My Digital Board 2.0",
+          "liveClockStr",
+          "Lock",
+          "Unlock"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Topbar displays the app title, full date, and a live updating clock.",
+        "Board selector dropdown switches between Amazon and SNHU boards.",
+        "Last Updated timestamp updates whenever any card is moved or state saved.",
+        "Lock button switches to Unlock button (with confirmation modal) when active.",
+        "Topbar collapses to single-column layout on screens ≤560px."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement the Amazon Workplace Staffing Board with 5 columns (Process Guide, In Path Function, Problem Solve, LaborShare, Not Assigned), each containing subsections as defined: Process Guide → [Stow, Pick]; In Path Function → [Downstacker, Stower, Picker, Transporter (Stow or Pick)]; Problem Solve → [QXY2, XLX7, IOL/ICQA]; LaborShare → [Inbound, Outbound]; Not Assigned → [Default]. Drag-and-drop must allow cards to be moved between any subsection. Each card displays: person name, login, shift co-host code, and shift pattern.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "STAFFING_COLS",
+          "onDragStart",
+          "onDrop",
+          "card.personName",
+          "card.login",
+          "card.shiftCoHost",
+          "card.shiftPattern"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All 5 columns with their correct subsections render.",
+        "Cards can be dragged from any subsection and dropped into any other subsection.",
+        "Drop target highlights visually during drag.",
+        "Column header shows total card count across all its subsections.",
+        "Subsection header shows its individual card count.",
+        "Drag is disabled when the board is locked."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Seed the staffing board with a default card for Miguel A Davalos (login: migudavc, shift co-host: DB3T0700, shift pattern: Back Half Days) placed in the Not Assigned / Default subsection. On state load, always ensure this card exists; if missing, prepend it. Migrate legacy column key names to the current subsection keys.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "miguelCard()",
+          "migudavc",
+          "DB3T0700",
+          "Back Half Days",
+          "migrateStaffingCol"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Miguel's card is always present in the staffing board on first load and after state migration.",
+        "Legacy column keys (planned, onFloor, break, off) are remapped to valid subsection keys.",
+        "No duplicate Miguel cards are created on repeated loads."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Implement the SNHU University Course Tracker board with 3 columns (Current Term, Upcoming Term, Not Assigned). Current Term and Upcoming Term each have two subsections: Pending and In Progress. Not Assigned is a flat drop zone. Seed 4 canonical course cards: ENG 190 (C-2 Term – March thru April 2026), IDS 105 (C-2 Term), ECO 202 (C-3 Term – May thru June 2026), PHL 260 (C-3 Term). Each card displays the course title and term. Cards are draggable between all drop zones.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "SNHU_COLS",
+          "snhuCanonicalCards",
+          "ENG 190",
+          "IDS 105",
+          "ECO 202",
+          "PHL 260",
+          "cur_pending",
+          "cur_progress",
+          "up_pending",
+          "up_progress",
+          "snhu_na"
+        ]
+      },
+      "acceptanceCriteria": [
+        "3 columns render with correct subsections.",
+        "All 4 canonical course cards appear on first load.",
+        "Cards can be dragged to any subsection or the Not Assigned zone.",
+        "Card positions persist across page reloads via the backend.",
+        "Canonical cards are never duplicated on reload; their saved column positions are respected.",
+        "Legacy SNHU column keys are migrated to current keys."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Implement board lock/unlock functionality. When locked, all drag-and-drop is disabled, and attempting to move a card shows a toast notification 'Locked. Unlock to edit.' The Lock button becomes an Unlock button. Clicking Unlock opens a confirmation modal; confirming unlocks the board. Lock state must persist across page reloads.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "isLocked",
+          "unlockModalOpen",
+          "Locked. Unlock to edit.",
+          "lockNow",
+          "unlockNow",
+          "localStorage.setItem(lockKey"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Locked state disables all drag-and-drop on both boards.",
+        "Toast appears when a user attempts to drag while locked.",
+        "Confirmation modal appears before unlocking.",
+        "Lock state is persisted to the backend (or localStorage) and restored on reload."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Implement a transient toast notification component that displays short messages at the bottom-center of the screen for 1800ms then auto-dismisses.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "toast",
+          "setToast",
+          "window.setTimeout(() => setToast(\"\"), 1800)",
+          ".toast { position: fixed; left: 50%; bottom: 18px;"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Toast appears centered at the bottom of the viewport.",
+        "Toast automatically disappears after 1.8 seconds.",
+        "Multiple rapid triggers reset the timer correctly."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Apply a dark deep-space visual theme consistently across the app: deep navy/near-black radial gradient background (#0b1020 base with #15204a highlight at top-left), frosted-glass panels with backdrop blur, subtle white-border cards, and muted white typography. Use this exact palette and style for all UI elements.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "--bg: #0b1020",
+          "radial-gradient(1200px 700px at 20% 0%, #15204a 0%, var(--bg) 55%)",
+          "backdrop-filter: blur(8px)",
+          "rgba(18,26,51,.78)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Background uses the deep navy radial gradient.",
+        "All panel/card surfaces use semi-transparent frosted glass styling.",
+        "Typography uses the defined muted white color variables.",
+        "Primary action buttons use green-tinted styling; lock button uses amber/red-tinted styling.",
+        "Theme is applied uniformly on both boards."
+      ]
+    }
+  ],
+  "constraints": [
+    "The login name 'migudavc' and associated card data (DB3T0700, Back Half Days) must be hardcoded as the canonical seed card.",
+    "The 4 SNHU course cards with their exact titles and term strings must be the canonical seed cards and must not be removed.",
+    "Column and subsection keys must match exactly: pg_stow, pg_pick, ipf_down, ipf_stow, ipf_pick, ipf_trans, ps_qxy2, ps_xlx7, ps_iol, ls_in, ls_out, na_default (staffing) and cur_pending, cur_progress, up_pending, up_progress, snhu_na (SNHU).",
+    "Board state must persist via the backend canister (not only localStorage).",
+    "Do not change the defined column/section structure of either board."
+  ],
+  "nonGoals": [
+    "Multi-user authentication or per-user access control beyond the single hardcoded login.",
+    "Adding new cards via the UI (only the seed cards are managed).",
+    "Real-time collaboration or WebSocket sync.",
+    "Email or push notifications.",
+    "Any third-party API integrations."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

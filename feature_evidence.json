@@ -1,0 +1,144 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-build-the-main-app-shell-with-a-three-section-topbar-left-panel-board-selector-dropdown-last-updated-timestamp-center-panel-title-my-digital-board-2-0-today-s-full-date-live-clock-updating-every-second-and-right-panel-lock-unlock-button-the-topbar-must-be-responsive-and-collapse-to-single-column-on-narrow-screens",
+      "featureTitle": "Build the main App shell with a three-section topbar: left panel (board selector dropdown + last-updated timestamp), center panel (title 'My Digital Board 2.0' + today's full date + live clock updating every second), and right panel (Lock / Unlock button). The topbar must be responsive and collapse to single-column on narrow screens.",
+      "files": [
+        "frontend/src/App.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-amazon-workplace-staffing-board-with-5-columns-process-guide-in-path-function-problem-solve-laborshare-not-assigned-each-containing-subsections-as-defined-process-guide-stow-pick-in-path-function-downstacker-stower-picker-transporter-stow-or-pick-problem-solve-qxy2-xlx7-iol-icqa-laborshare-inbound-outbound-not-assigned-default-drag-and-drop-must-allow-cards-to-be-moved-between-any-subsection-each-card-displays-person-name-login-shift-co-host-code-and-shift-pattern",
+      "featureTitle": "Implement the Amazon Workplace Staffing Board with 5 columns (Process Guide, In Path Function, Problem Solve, LaborShare, Not Assigned), each containing subsections as defined: Process Guide → [Stow, Pick]; In Path Function → [Downstacker, Stower, Picker, Transporter (Stow or Pick)]; Problem Solve → [QXY2, XLX7, IOL/ICQA]; LaborShare → [Inbound, Outbound]; Not Assigned → [Default]. Drag-and-drop must allow cards to be moved between any subsection. Each card displays: person name, login, shift co-host code, and shift pattern.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/StaffingBoard.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-seed-the-staffing-board-with-a-default-card-for-miguel-a-davalos-login-migudavc-shift-co-host-db3t0700-shift-pattern-back-half-days-placed-in-the-not-assigned-default-subsection-on-state-load-always-ensure-this-card-exists-if-missing-prepend-it-migrate-legacy-column-key-names-to-the-current-subsection-keys",
+      "featureTitle": "Seed the staffing board with a default card for Miguel A Davalos (login: migudavc, shift co-host: DB3T0700, shift pattern: Back Half Days) placed in the Not Assigned / Default subsection. On state load, always ensure this card exists; if missing, prepend it. Migrate legacy column key names to the current subsection keys.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/utils/boardState.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-the-snhu-university-course-tracker-board-with-3-columns-current-term-upcoming-term-not-assigned-current-term-and-upcoming-term-each-have-two-subsections-pending-and-in-progress-not-assigned-is-a-flat-drop-zone-seed-4-canonical-course-cards-eng-190-c-2-term-march-thru-april-2026-ids-105-c-2-term-eco-202-c-3-term-may-thru-june-2026-phl-260-c-3-term-each-card-displays-the-course-title-and-term-cards-are-draggable-between-all-drop-zones",
+      "featureTitle": "Implement the SNHU University Course Tracker board with 3 columns (Current Term, Upcoming Term, Not Assigned). Current Term and Upcoming Term each have two subsections: Pending and In Progress. Not Assigned is a flat drop zone. Seed 4 canonical course cards: ENG 190 (C-2 Term – March thru April 2026), IDS 105 (C-2 Term), ECO 202 (C-3 Term – May thru June 2026), PHL 260 (C-3 Term). Each card displays the course title and term. Cards are draggable between all drop zones.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/SNHUBoard.tsx",
+        "frontend/src/utils/boardState.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-board-lock-unlock-functionality-when-locked-all-drag-and-drop-is-disabled-and-attempting-to-move-a-card-shows-a-toast-notification-locked-unlock-to-edit-the-lock-button-becomes-an-unlock-button-clicking-unlock-opens-a-confirmation-modal-confirming-unlocks-the-board-lock-state-must-persist-across-page-reloads",
+      "featureTitle": "Implement board lock/unlock functionality. When locked, all drag-and-drop is disabled, and attempting to move a card shows a toast notification 'Locked. Unlock to edit.' The Lock button becomes an Unlock button. Clicking Unlock opens a confirmation modal; confirming unlocks the board. Lock state must persist across page reloads.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/SNHUBoard.tsx",
+        "frontend/src/components/StaffingBoard.tsx",
+        "frontend/src/components/UnlockModal.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-transient-toast-notification-component-that-displays-short-messages-at-the-bottom-center-of-the-screen-for-1800ms-then-auto-dismisses",
+      "featureTitle": "Implement a transient toast notification component that displays short messages at the bottom-center of the screen for 1800ms then auto-dismisses.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/Toast.tsx"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-apply-a-dark-deep-space-visual-theme-consistently-across-the-app-deep-navy-near-black-radial-gradient-background-0b1020-base-with-15204a-highlight-at-top-left-frosted-glass-panels-with-backdrop-blur-subtle-white-border-cards-and-muted-white-typography-use-this-exact-palette-and-style-for-all-ui-elements",
+      "featureTitle": "Apply a dark deep-space visual theme consistently across the app: deep navy/near-black radial gradient background (#0b1020 base with #15204a highlight at top-left), frosted-glass panels with backdrop blur, subtle white-border cards, and muted white typography. Use this exact palette and style for all UI elements.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/SNHUBoard.tsx",
+        "frontend/src/components/StaffingBoard.tsx",
+        "frontend/src/components/Toast.tsx",
+        "frontend/src/components/UnlockModal.tsx",
+        "frontend/src/index.css"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

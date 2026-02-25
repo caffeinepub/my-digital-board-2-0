@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "My Digital Board 2.0 — a personal dual-board dashboard app. Board 1: Amazon Workplace staffing board (5 columns: Process Guide, In Path Function, Problem Solve, LaborShare, Not Assigned — each with subsections) with drag-and-drop card placement, lock/unlock, and localStorage persistence. Board 2: SNHU university course tracker (3 columns: Current Term, Upcoming Term, Not Assigned) with 4 canonical course cards. Features a live clock, today's date, last-updated timestamp, and board selector in the topbar.",
+  "architectural_notes": [
+    "Single HTML file using React 18 UMD + Babel standalone (no build step)",
+    "State persisted to localStorage keyed by login name (swb_state_migudavc)",
+    "Two boards: 'amazon' (StaffingBoard) and 'snhu' (SnhuBoard), toggled via select dropdown",
+    "Staffing board: 5 columns with subsections, drag-and-drop between sections, Miguel card always present",
+    "SNHU board: 4 canonical course cards normalized/deduped on load, 3 columns",
+    "Lock/unlock system: board becomes view-only when locked, stored in localStorage",
+    "Migration functions handle old column key names for backwards compatibility"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-build-the-main-app-shell-with-a-three-section-topbar-left-panel-board-selector-dropdown-last-updated-timestamp-center-panel-title-my-digital-board-2-0-today-s-full-date-live-clock-updating-every-second-and-right-panel-lock-unlock-button-the-topbar-must-be-responsive-and-collapse-to-single-column-on-narrow-screens",
+      "title": "Build the main App shell with a three-section topbar: left panel (board selector dropdown + last-updated timestamp), center panel (title 'My Digital Board 2.0' + today's full date + live clock updating every second), and right panel (Lock / Unlock button). The topbar must be responsive and collapse to single-column on narrow screens.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-amazon-workplace-staffing-board-with-5-columns-process-guide-in-path-function-problem-solve-laborshare-not-assigned-each-containing-subsections-as-defined-process-guide-stow-pick-in-path-function-downstacker-stower-picker-transporter-stow-or-pick-problem-solve-qxy2-xlx7-iol-icqa-laborshare-inbound-outbound-not-assigned-default-drag-and-drop-must-allow-cards-to-be-moved-between-any-subsection-each-card-displays-person-name-login-shift-co-host-code-and-shift-pattern",
+      "title": "Implement the Amazon Workplace Staffing Board with 5 columns (Process Guide, In Path Function, Problem Solve, LaborShare, Not Assigned), each containing subsections as defined: Process Guide → [Stow, Pick]; In Path Function → [Downstacker, Stower, Picker, Transporter (Stow or Pick)]; Problem Solve → [QXY2, XLX7, IOL/ICQA]; LaborShare → [Inbound, Outbound]; Not Assigned → [Default]. Drag-and-drop must allow cards to be moved between any subsection. Each card displays: person name, login, shift co-host code, and shift pattern.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-seed-the-staffing-board-with-a-default-card-for-miguel-a-davalos-login-migudavc-shift-co-host-db3t0700-shift-pattern-back-half-days-placed-in-the-not-assigned-default-subsection-on-state-load-always-ensure-this-card-exists-if-missing-prepend-it-migrate-legacy-column-key-names-to-the-current-subsection-keys",
+      "title": "Seed the staffing board with a default card for Miguel A Davalos (login: migudavc, shift co-host: DB3T0700, shift pattern: Back Half Days) placed in the Not Assigned / Default subsection. On state load, always ensure this card exists; if missing, prepend it. Migrate legacy column key names to the current subsection keys.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-snhu-university-course-tracker-board-with-3-columns-current-term-upcoming-term-not-assigned-current-term-and-upcoming-term-each-have-two-subsections-pending-and-in-progress-not-assigned-is-a-flat-drop-zone-seed-4-canonical-course-cards-eng-190-c-2-term-march-thru-april-2026-ids-105-c-2-term-eco-202-c-3-term-may-thru-june-2026-phl-260-c-3-term-each-card-displays-the-course-title-and-term-cards-are-draggable-between-all-drop-zones",
+      "title": "Implement the SNHU University Course Tracker board with 3 columns (Current Term, Upcoming Term, Not Assigned). Current Term and Upcoming Term each have two subsections: Pending and In Progress. Not Assigned is a flat drop zone. Seed 4 canonical course cards: ENG 190 (C-2 Term – March thru April 2026), IDS 105 (C-2 Term), ECO 202 (C-3 Term – May thru June 2026), PHL 260 (C-3 Term). Each card displays the course title and term. Cards are draggable between all drop zones.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-board-lock-unlock-functionality-when-locked-all-drag-and-drop-is-disabled-and-attempting-to-move-a-card-shows-a-toast-notification-locked-unlock-to-edit-the-lock-button-becomes-an-unlock-button-clicking-unlock-opens-a-confirmation-modal-confirming-unlocks-the-board-lock-state-must-persist-across-page-reloads",
+      "title": "Implement board lock/unlock functionality. When locked, all drag-and-drop is disabled, and attempting to move a card shows a toast notification 'Locked. Unlock to edit.' The Lock button becomes an Unlock button. Clicking Unlock opens a confirmation modal; confirming unlocks the board. Lock state must persist across page reloads.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-transient-toast-notification-component-that-displays-short-messages-at-the-bottom-center-of-the-screen-for-1800ms-then-auto-dismisses",
+      "title": "Implement a transient toast notification component that displays short messages at the bottom-center of the screen for 1800ms then auto-dismisses.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-dark-deep-space-visual-theme-consistently-across-the-app-deep-navy-near-black-radial-gradient-background-0b1020-base-with-15204a-highlight-at-top-left-frosted-glass-panels-with-backdrop-blur-subtle-white-border-cards-and-muted-white-typography-use-this-exact-palette-and-style-for-all-ui-elements",
+      "title": "Apply a dark deep-space visual theme consistently across the app: deep navy/near-black radial gradient background (#0b1020 base with #15204a highlight at top-left), frosted-glass panels with backdrop blur, subtle white-border cards, and muted white typography. Use this exact palette and style for all UI elements.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Implement a Motoko backend actor that persists board state (staffing cards and university course cards) in stable storage, with query and update endpoints to read and write the full board state keyed by user login.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "My Digital Board 2.0",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

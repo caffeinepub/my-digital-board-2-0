@@ -1,0 +1,200 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "My Digital Board 2.0 — Dual-Board Personal Dashboard Frontend",
+  "requirements": [
+    {
+      "id": "REQ-2",
+      "summary": "Build the main App shell with three-section topbar containing board selector, title with live clock, and lock/unlock button, responsive for narrow screens",
+      "acceptanceCriteria": [
+        "Topbar displays the app title, full date, and a live updating clock.",
+        "Board selector dropdown switches between Amazon and SNHU boards.",
+        "Last Updated timestamp updates whenever any card is moved or state saved.",
+        "Lock button switches to Unlock button (with confirmation modal) when active.",
+        "Topbar collapses to single-column layout on screens ≤560px."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Implement the main App shell with three-section topbar grid layout (board selector + last-updated on left, title + date + live clock in center, lock/unlock button on right). Add state for selectedBoard ('amazon' | 'snhu'), isLocked, lastUpdated timestamp, and current time. Set up useEffect hook to update clock every second. Include responsive CSS that collapses topbar to single-column on screens ≤560px. Wire the board selector dropdown to switch between Amazon staffing board and SNHU course board views. Connect lock/unlock button to toggle isLocked state and open confirmation modal for unlock action."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Implement the Amazon Workplace Staffing Board with 5 columns and their subsections, supporting drag-and-drop card movement and displaying person name, login, shift co-host, and shift pattern",
+      "acceptanceCriteria": [
+        "All 5 columns with their correct subsections render.",
+        "Cards can be dragged from any subsection and dropped into any other subsection.",
+        "Drop target highlights visually during drag.",
+        "Column header shows total card count across all its subsections.",
+        "Subsection header shows its individual card count.",
+        "Drag is disabled when the board is locked."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/StaffingBoard.tsx",
+          "operation": "create",
+          "description": "Create the Amazon Workplace Staffing Board component with 5 columns: Process Guide (subsections: pg_stow, pg_pick), In Path Function (subsections: ipf_down, ipf_stow, ipf_pick, ipf_trans), Problem Solve (subsections: ps_qxy2, ps_xlx7, ps_iol), LaborShare (subsections: ls_in, ls_out), Not Assigned (subsection: na_default). Implement HTML5 drag-and-drop with onDragStart, onDragOver, onDrop handlers. Each card displays personName, login, shiftCoHost, and shiftPattern fields. Add visual drop-target highlighting during drag. Show card counts in column headers (total across subsections) and subsection headers (individual count). Disable drag when isLocked prop is true. Accept staffCards state and onCardMove callback as props."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import and render StaffingBoard component when selectedBoard is 'amazon'. Pass staffCards state, isLocked state, and handleCardMove callback that updates card positions, triggers lastUpdated timestamp update, and persists state to backend via updateBoardState."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Seed the staffing board with Miguel A Davalos card in Not Assigned/Default subsection, ensure it persists on load, and migrate legacy column keys",
+      "acceptanceCriteria": [
+        "Miguel's card is always present in the staffing board on first load and after state migration.",
+        "Legacy column keys (planned, onFloor, break, off) are remapped to valid subsection keys.",
+        "No duplicate Miguel cards are created on repeated loads."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/utils/boardState.ts",
+          "operation": "create",
+          "description": "Create utility functions for board state management. Implement miguelCard() function that returns the canonical card object with id, personName: 'Miguel A Davalos', login: 'migudavc', shiftCoHost: 'DB3T0700', shiftPattern: 'Back Half Days', position: 'na_default'. Implement migrateStaffingCol function that remaps legacy column keys (planned, onFloor, break, off) to valid subsection keys (na_default or appropriate current keys). Implement ensureMiguelCard function that checks if Miguel's card exists in staffCards array and prepends it if missing. Export all utility functions."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import boardState utility functions. In the useEffect hook that loads initial state from backend via getBoardState, apply migrateStaffingCol to loaded staffCards, then call ensureMiguelCard to guarantee Miguel's card is present. Set the processed staffCards to state. Ensure this migration runs on every state load but does not create duplicate Miguel cards."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement the SNHU University Course Tracker board with 3 columns and subsections, seed 4 canonical course cards, support drag-and-drop, and migrate legacy keys",
+      "acceptanceCriteria": [
+        "3 columns render with correct subsections.",
+        "All 4 canonical course cards appear on first load.",
+        "Cards can be dragged to any subsection or the Not Assigned zone.",
+        "Card positions persist across page reloads via the backend.",
+        "Canonical cards are never duplicated on reload; their saved column positions are respected.",
+        "Legacy SNHU column keys are migrated to current keys."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SNHUBoard.tsx",
+          "operation": "create",
+          "description": "Create the SNHU University Course Tracker board component with 3 columns: Current Term (subsections: cur_pending, cur_progress), Upcoming Term (subsections: up_pending, up_progress), Not Assigned (subsection: snhu_na). Implement HTML5 drag-and-drop similar to StaffingBoard. Each card displays course title and term string. Add visual drop-target highlighting and card counts in headers. Disable drag when isLocked prop is true. Accept courseCards state and onCardMove callback as props."
+        },
+        {
+          "path": "frontend/src/utils/boardState.ts",
+          "operation": "modify",
+          "description": "Add snhuCanonicalCards function that returns array of 4 canonical course card objects: ENG 190 (C-2 Term – March thru April 2026), IDS 105 (C-2 Term), ECO 202 (C-3 Term – May thru June 2026), PHL 260 (C-3 Term). Each card has id, title, term, and default position (snhu_na for new cards). Implement migrateSNHUCol function that remaps legacy SNHU column keys to current keys (cur_pending, cur_progress, up_pending, up_progress, snhu_na). Implement ensureCanonicalCourses function that checks for each canonical course by title in courseCards array and adds missing ones with their saved positions if they exist in loaded state, otherwise default position. Export all functions."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import SNHUBoard component and SNHU utility functions. Render SNHUBoard when selectedBoard is 'snhu'. In the state loading useEffect, apply migrateSNHUCol to loaded courseCards, then call ensureCanonicalCourses to guarantee all 4 canonical course cards are present without duplication. Pass courseCards state, isLocked state, and handleCourseMove callback to SNHUBoard. The handleCourseMove callback updates card positions, triggers lastUpdated timestamp, and persists via updateBoardState."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement board lock/unlock functionality with drag-and-drop disable, toast notification on locked drag attempt, unlock confirmation modal, and persisted lock state",
+      "acceptanceCriteria": [
+        "Locked state disables all drag-and-drop on both boards.",
+        "Toast appears when a user attempts to drag while locked.",
+        "Confirmation modal appears before unlocking.",
+        "Lock state is persisted to the backend (or localStorage) and restored on reload."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/UnlockModal.tsx",
+          "operation": "create",
+          "description": "Create a confirmation modal component for unlock action. Display message asking user to confirm unlocking the board. Include Confirm and Cancel buttons. Accept isOpen, onConfirm, and onCancel props. Use frosted-glass styling consistent with the deep-space theme."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add unlockModalOpen state to control UnlockModal visibility. Implement lockNow function that sets isLocked to true, saves lock state to localStorage, and updates lastUpdated. Implement unlockNow function that sets unlockModalOpen to true. Implement confirmUnlock function that sets isLocked to false, closes modal, saves lock state to localStorage, and updates lastUpdated. In the topbar, render Lock button when unlocked (calls lockNow) and Unlock button when locked (calls unlockNow). Import and render UnlockModal with isOpen, onConfirm (confirmUnlock), and onCancel (close modal) props. On component mount, load lock state from localStorage and set isLocked."
+        },
+        {
+          "path": "frontend/src/components/StaffingBoard.tsx",
+          "operation": "modify",
+          "description": "In drag handlers, check isLocked prop at the start of onDragStart. If locked, call a showToast callback prop with message 'Locked. Unlock to edit.' and prevent drag by returning early or calling preventDefault."
+        },
+        {
+          "path": "frontend/src/components/SNHUBoard.tsx",
+          "operation": "modify",
+          "description": "In drag handlers, check isLocked prop at the start of onDragStart. If locked, call a showToast callback prop with message 'Locked. Unlock to edit.' and prevent drag by returning early or calling preventDefault."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Pass showToast callback to both StaffingBoard and SNHUBoard components so they can trigger toast notifications when drag is attempted while locked."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement a transient toast notification component that displays short messages at the bottom-center for 1800ms then auto-dismisses",
+      "acceptanceCriteria": [
+        "Toast appears centered at the bottom of the viewport.",
+        "Toast automatically disappears after 1.8 seconds.",
+        "Multiple rapid triggers reset the timer correctly."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Toast.tsx",
+          "operation": "create",
+          "description": "Create a toast notification component that displays a message string prop. Position fixed at bottom-center of viewport (left: 50%, transform: translateX(-50%), bottom: 18px). Style with frosted-glass background, padding, border-radius, and muted white text. Component is conditionally rendered only when message is non-empty."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add toast state (empty string initially). Implement showToast function that sets toast message and starts a 1800ms timer using setTimeout to clear the message. Ensure multiple rapid calls clear the previous timer before setting a new one (store timer ref). Import and render Toast component at the end of App JSX, passing toast message. The showToast function is passed as callback to board components for locked drag notifications."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Apply a dark deep-space visual theme consistently across the app with navy gradient background, frosted-glass panels, subtle borders, and muted white typography",
+      "acceptanceCriteria": [
+        "Background uses the deep navy radial gradient.",
+        "All panel/card surfaces use semi-transparent frosted glass styling.",
+        "Typography uses the defined muted white color variables.",
+        "Primary action buttons use green-tinted styling; lock button uses amber/red-tinted styling.",
+        "Theme is applied uniformly on both boards."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Define CSS custom properties for the deep-space theme: --bg: #0b1020, --panel-bg: rgba(18,26,51,0.78), --text-muted: rgba(255,255,255,0.87), --border-subtle: rgba(255,255,255,0.12). Apply radial-gradient background to body: radial-gradient(1200px 700px at 20% 0%, #15204a 0%, #0b1020 55%). Set backdrop-filter: blur(8px) for panel classes. Define card styling with subtle white borders. Define button styles: primary actions with green tint (e.g., rgba(34,197,94,0.2) background, green border), lock button with amber/red tint (e.g., rgba(251,146,60,0.2) background when unlocked, rgba(239,68,68,0.2) when locked). Ensure all typography uses --text-muted color."
+        },
+        {
+          "path": "frontend/src/components/StaffingBoard.tsx",
+          "operation": "modify",
+          "description": "Apply theme classes to column containers, subsection containers, and card elements. Use --panel-bg for columns/subsections, --border-subtle for borders, and --text-muted for text. Ensure drop-target highlighting uses a subtle border color change consistent with the theme."
+        },
+        {
+          "path": "frontend/src/components/SNHUBoard.tsx",
+          "operation": "modify",
+          "description": "Apply theme classes to column containers, subsection containers, and card elements. Use --panel-bg for columns/subsections, --border-subtle for borders, and --text-muted for text. Ensure drop-target highlighting uses a subtle border color change consistent with the theme."
+        },
+        {
+          "path": "frontend/src/components/UnlockModal.tsx",
+          "operation": "modify",
+          "description": "Apply frosted-glass background (--panel-bg with backdrop-filter: blur(8px)) to modal container. Use --text-muted for text and theme-consistent button styling (green for Confirm, neutral for Cancel)."
+        },
+        {
+          "path": "frontend/src/components/Toast.tsx",
+          "operation": "modify",
+          "description": "Apply frosted-glass background (--panel-bg with backdrop-filter: blur(8px)) and --text-muted color to toast container. Add subtle border using --border-subtle."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Apply theme styling to topbar grid container using --panel-bg background, backdrop-filter, and --border-subtle bottom border. Style board selector dropdown and lock/unlock button with theme-consistent colors. Ensure responsive layout uses the same theme variables when collapsed to single-column on screens ≤560px."
+        }
+      ]
+    }
+  ]
+}
