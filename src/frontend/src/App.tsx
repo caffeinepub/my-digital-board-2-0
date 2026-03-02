@@ -163,7 +163,7 @@ export default function App() {
           padding: "14px 16px",
           border: "1px solid rgba(255,255,255,0.12)",
           borderRadius: "16px",
-          background: "rgba(18,26,51,0.78)",
+          background: "rgba(13,20,40,0.92)",
           boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
           backdropFilter: "blur(8px)",
         }}

@@ -105,7 +105,7 @@ export function StaffingBoard({
             style={{
               border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: "16px",
-              background: "rgba(18,26,51,0.65)",
+              background: "#111827",
               boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
               minHeight: "420px",
               display: "flex",
@@ -173,7 +173,7 @@ export function StaffingBoard({
                           overflow: "hidden",
                           background: isDragTarget
                             ? "rgba(99,179,237,0.06)"
-                            : "rgba(255,255,255,0.025)",
+                            : "rgba(0,0,0,0.25)",
                           transition: "border-color 0.15s, background 0.15s",
                         }}
                         onDragOver={(e) => {
@@ -268,7 +268,7 @@ export function StaffingBoard({
                           overflow: "hidden",
                           background: isDragTarget
                             ? "rgba(99,179,237,0.06)"
-                            : "rgba(255,255,255,0.025)",
+                            : "rgba(0,0,0,0.25)",
                           transition: "border-color 0.15s, background 0.15s",
                           flex: 1,
                         }}
